@@ -7,11 +7,12 @@ namespace EventSourcingDistilled.Core.UnitTests.Models
 {
     public class ToDoTests
     {
-
         [Fact]
-        public async Task Should()
+        public void Should()
         {
             var toDo = new ToDo();
+
+            Assert.Null(toDo.Name);
 
             toDo.Apply(new ToDoCreated("Do shopping"));
 
