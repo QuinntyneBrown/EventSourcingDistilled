@@ -1,0 +1,9 @@
+{  
+  "Projects": "",
+  "DatabaseConnectionPropertyKey": "",
+  "DatabaseSettingsKey": "",
+  "SolutionName": "EventSourcingDistilled.sln",
+  "RootNamespace": "EventSourcingDistilled",
+  "SourceFolder": "src",
+  "TestFolder":  "test"
+}
