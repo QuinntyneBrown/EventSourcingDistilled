@@ -1,4 +1,3 @@
-using EventSourcingDistilled.Core.DomainEvents;
 using EventSourcingDistilled.Core.Models;
 using Xunit;
 
@@ -7,15 +6,13 @@ namespace EventSourcingDistilled.Core.UnitTests.Models
     public class ToDoTests
     {
         [Fact]
-        public void Should()
+        public void ShouldCreateValidToDo()
         {
-            var toDo = new ToDo();
+            var name = "Do Shopping";
 
-            Assert.Null(toDo.Name);
+            var toDo = new ToDo(name);
 
-            toDo.Apply(new ToDoCreated("Do shopping"));
-
-            Assert.Equal("Do shopping", toDo.Name);
+            Assert.Equal(name, toDo.Name);
 
             Assert.Single(toDo.DomainEvents);
         }

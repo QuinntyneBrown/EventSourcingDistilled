@@ -1,15 +1,11 @@
 using BuildingBlocks.Domain;
 using EventSourcingDistilled.Core.DomainEvents;
+using System;
 
 namespace EventSourcingDistilled.Core.Models
 {
     public class ToDo: AggregateRoot
     {
-        public ToDo()
-        {
-
-        }
-
         public ToDo(string name) 
             => Apply(new ToDoCreated(name));
 
@@ -17,7 +13,8 @@ namespace EventSourcingDistilled.Core.Models
         {
             if(@event is ToDoCreated toDoCreated)
             {
-                Name = toDoCreated.Name;
+                ToDoId = toDoCreated.ToDoId;
+                Name = toDoCreated.Name;                
             }
         }
 
@@ -26,6 +23,7 @@ namespace EventSourcingDistilled.Core.Models
 
         }
 
+        public Guid ToDoId { get; set; }
         public string Name { get; set; }
 
     }

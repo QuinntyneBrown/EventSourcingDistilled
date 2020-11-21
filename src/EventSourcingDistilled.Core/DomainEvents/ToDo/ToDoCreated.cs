@@ -10,5 +10,6 @@ namespace EventSourcingDistilled.Core.DomainEvents
         }
 
         public string Name { get; set; }
+        public Guid ToDoId { get; set; } = Guid.NewGuid();
     }
 }
