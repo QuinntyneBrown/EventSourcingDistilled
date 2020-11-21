@@ -13,6 +13,6 @@ namespace EventSourcingDistilled.Core.Data
         TAggregateRoot Find<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot;
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
