@@ -1,6 +1,5 @@
 using EventSourcingDistilled.Core.DomainEvents;
 using EventSourcingDistilled.Core.Models;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace EventSourcingDistilled.Core.UnitTests.Models

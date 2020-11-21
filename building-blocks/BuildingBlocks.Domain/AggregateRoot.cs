@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 
-namespace EventSourcingDistilled.Core.Common
+namespace BuildingBlocks.Domain
 {
     public abstract class AggregateRoot
     {
-        private List<object> _events;
+        private List<object> _events = new List<object>();
         public IReadOnlyCollection<object> DomainEvents => _events.AsReadOnly();
-        public void RaiseDomainEvent(object @event) {
-            _events = _events ?? new List<object>();
+        public void RaiseDomainEvent(object @event)
+        {
+            _events ??= new List<object>();
             _events.Add(@event);
         }
         public void ClearChanges() => _events.Clear();
@@ -20,4 +21,5 @@ namespace EventSourcingDistilled.Core.Common
         protected abstract void When(object @event);
         protected abstract void EnsureValidState();
     }
+
 }

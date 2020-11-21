@@ -1,4 +1,4 @@
-using EventSourcingDistilled.Core.Common;
+using BuildingBlocks.Domain;
 using EventSourcingDistilled.Core.DomainEvents;
 
 namespace EventSourcingDistilled.Core.Models
