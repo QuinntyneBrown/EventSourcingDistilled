@@ -1,10 +1,10 @@
-using MediatR;
 using EventSourcingDistilled.Core.Data;
+using EventSourcingDistilled.Core.Models;
+using MediatR;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EventSourcingDistilled.Core.Models;
-using System.Linq;
 
 namespace EventSourcingDistilled.Domain.Features.Customers
 {
@@ -27,10 +27,12 @@ namespace EventSourcingDistilled.Domain.Features.Customers
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {
 
-                var customer = _context.Set<Customer>().First(x => x.CustomerId == request.CustomerId);
+                var query = from customer in _context.Set<Customer>()
+                        where customer.CustomerId == request.CustomerId
+                        select customer.ToDto();
 
                 return new Response() { 
-                    Customer = customer.ToDto()
+                    Customer = query.SingleOrDefault()
                 };
             }
         }

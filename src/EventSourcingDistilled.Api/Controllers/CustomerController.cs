@@ -1,7 +1,12 @@
+using BuildingBlocks.EventStore;
 using EventSourcingDistilled.Domain.Features.Customers;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EventSourcingDistilled.Api.Controllers
@@ -11,8 +16,12 @@ namespace EventSourcingDistilled.Api.Controllers
     public class CustomersController
     {
         private readonly IMediator _mediator;
-        public CustomersController(IMediator mediator)
+        private readonly IEventStore _eventStore;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public CustomersController(IMediator mediator, IEventStore eventStore, IHttpContextAccessor httpContextAccessor)
         {
+            _eventStore = eventStore;
+            _httpContextAccessor = httpContextAccessor;
             _mediator = mediator;
         }
 
@@ -47,6 +56,7 @@ namespace EventSourcingDistilled.Api.Controllers
         [HttpGet("{customerId}",Name = "GetCustomerByIdRoute")]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(GetCustomerById.Response), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<GetCustomerById.Response>> Get([FromQuery]GetCustomerById.Request request)
         {
@@ -58,6 +68,31 @@ namespace EventSourcingDistilled.Api.Controllers
             }
 
             return response;
+        }
+
+        [HttpGet("ss")]
+        public async Task ServerSentEvents(CancellationToken cancellationToken)
+        {
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            var response = _httpContextAccessor.HttpContext.Response;
+
+            response.Headers.Add("Content-Type", "text/event-stream");
+
+            _eventStore.Subscribe(async e =>
+            {
+                if (e.Event.Aggregate == "Customer")
+                {
+                    await response
+                    .WriteAsync($"data: {JsonConvert.SerializeObject(e)}\r\r");
+
+                    response.Body.Flush();
+                }
+
+            });
+
+            await tcs.Task;
+
         }
     }
 }
