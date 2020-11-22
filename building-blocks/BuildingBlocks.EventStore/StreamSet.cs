@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Domain;
+﻿using BuildingBlocks.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

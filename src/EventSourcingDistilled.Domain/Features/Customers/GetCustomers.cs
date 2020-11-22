@@ -1,4 +1,4 @@
-using EventSourcingDistilled.Core.Data;
+using BuildingBlocks.Abstractions;
 using EventSourcingDistilled.Core.Models;
 using MediatR;
 using System.Collections.Generic;
@@ -19,9 +19,9 @@ namespace EventSourcingDistilled.Domain.Features.Customers
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private readonly IEventSourcingDistilledDbContext _context;
+            private readonly IAppDbContext _context;
 
-            public Handler(IEventSourcingDistilledDbContext context) => _context = context;
+            public Handler(IAppDbContext context) => _context = context;
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {
 			    return new Response() { 

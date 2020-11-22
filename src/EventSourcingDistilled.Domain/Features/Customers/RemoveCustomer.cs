@@ -1,10 +1,10 @@
+using BuildingBlocks.Abstractions;
+using EventSourcingDistilled.Core.Models;
 using MediatR;
-using EventSourcingDistilled.Core.Data;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EventSourcingDistilled.Core.Models;
-using System.Linq;
 
 namespace EventSourcingDistilled.Domain.Features.Customers
 {
@@ -16,9 +16,9 @@ namespace EventSourcingDistilled.Domain.Features.Customers
 
         public class Handler : IRequestHandler<Request, Unit>
         {
-            private readonly IEventSourcingDistilledDbContext _context;
+            private readonly IAppDbContext _context;
 
-            public Handler(IEventSourcingDistilledDbContext context) => _context = context;
+            public Handler(IAppDbContext context) => _context = context;
 
             public Task<Unit> Handle(Request request, CancellationToken cancellationToken) {
 

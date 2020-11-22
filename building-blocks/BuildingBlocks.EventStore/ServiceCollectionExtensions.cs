@@ -1,12 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace BuildingBlocks.EventStore
 {
-    class ServiceCollectionExtensions
+    public static class ServiceCollectionExtensions
     {
+        public static void AddEventStore(this IServiceCollection services)
+        {
+            services.AddTransient<IEventStoreDbContext, EventStoreDbContext>();
+            services.AddTransient<IAggregateSet, AggregateSet>();
+            services.AddSingleton<IEventStore, EventStore>();
+        }
     }
 }

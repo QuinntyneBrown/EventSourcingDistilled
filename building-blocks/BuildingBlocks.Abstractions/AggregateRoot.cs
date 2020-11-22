@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace BuildingBlocks.Domain
+namespace BuildingBlocks.Abstractions
 {
     public abstract class AggregateRoot
     {

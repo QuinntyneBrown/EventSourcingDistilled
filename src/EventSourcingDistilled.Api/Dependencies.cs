@@ -1,3 +1,4 @@
+using BuildingBlocks.Abstractions;
 using BuildingBlocks.EventStore;
 using EventSourcingDistilled.Core.Data;
 using EventSourcingDistilled.Domain.Features.Customers;
@@ -7,8 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace EventSourcingDistilled.Api
 {
@@ -51,18 +50,7 @@ namespace EventSourcingDistilled.Api
 
             services.AddMediatR(typeof(GetCustomers));
 
-            services.AddTransient<IEventStoreDbContext, EventStoreDbContext>();
-
-            services.AddTransient<IAggregateSet, AggregateSet>();
-
-            services.AddSingleton<IEventStore, EventStore>();
-
-            services.AddTransient<IEventSourcingDistilledDbContext, EventSourcingDistilledDbContext>();
-
-            var jwtSecurityTokenHandler = new JwtSecurityTokenHandler
-            {
-                InboundClaimTypeMap = new Dictionary<string, string>()
-            };
+            services.AddEventStore();
 
             services.AddDbContext<EventStoreDbContext>(options =>
             {
@@ -71,6 +59,8 @@ namespace EventSourcingDistilled.Api
                         .EnableRetryOnFailure())
                 .EnableSensitiveDataLogging();
             });
+
+            services.AddTransient<IAppDbContext, EventSourcingDistilledDbContext>();
 
             services.AddControllers();
         }

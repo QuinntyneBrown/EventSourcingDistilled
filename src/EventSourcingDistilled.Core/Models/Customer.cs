@@ -1,4 +1,4 @@
-using BuildingBlocks.Domain;
+using BuildingBlocks.Abstractions;
 using EventSourcingDistilled.Core.DomainEvents.Customer;
 using System;
 

@@ -1,12 +1,11 @@
-﻿using BuildingBlocks.Domain;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EventSourcingDistilled.Core.Data
+namespace BuildingBlocks.Abstractions
 {
-    public interface IEventSourcingDistilledDbContext
+    public interface IAppDbContext
     {
         IQueryable<T> Set<T>()
             where T : AggregateRoot;

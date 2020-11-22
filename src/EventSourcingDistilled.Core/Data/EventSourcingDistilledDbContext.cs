@@ -1,4 +1,4 @@
-﻿using BuildingBlocks.Domain;
+﻿using BuildingBlocks.Abstractions;
 using BuildingBlocks.EventStore;
 using System;
 using System.Linq;
@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace EventSourcingDistilled.Core.Data
 {
-
-    public class EventSourcingDistilledDbContext: IEventSourcingDistilledDbContext
+    public class EventSourcingDistilledDbContext: IAppDbContext
     {
         private readonly IEventStore _eventStore;
         private readonly IAggregateSet _aggregateSet;
@@ -19,24 +18,16 @@ namespace EventSourcingDistilled.Core.Data
         }
         public IQueryable<TAggregateRoot> Set<TAggregateRoot>()
             where TAggregateRoot: AggregateRoot
-        {
-            return _aggregateSet.Set<TAggregateRoot>();
-        }
+            => _aggregateSet.Set<TAggregateRoot>();
 
         public void Store(AggregateRoot aggregateRoot)
-        {
-            _eventStore.Save(aggregateRoot);
-        }
+            => _eventStore.Save(aggregateRoot);
 
         public TAggregateRoot Find<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot
-        {
-            return _aggregateSet.Find<TAggregateRoot>(id);
-        }
+            => _aggregateSet.Find<TAggregateRoot>(id);
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
-        {
-            return await _eventStore.SaveChangesAsync(cancellationToken);
-        }
+            => await _eventStore.SaveChangesAsync(cancellationToken);
     }
 }

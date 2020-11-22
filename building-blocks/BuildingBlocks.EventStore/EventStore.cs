@@ -1,4 +1,4 @@
-using BuildingBlocks.Domain;
+using BuildingBlocks.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace BuildingBlocks.EventStore
     public class EventStore : IEventStore
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
-        private List<StoredEvent> storedEvents = new List<StoredEvent>();
+        private readonly List<StoredEvent> storedEvents = new List<StoredEvent>();
         public EventStore(
             IServiceScopeFactory serviceScopeFactory = default
             )
@@ -24,11 +24,6 @@ namespace BuildingBlocks.EventStore
             var type = aggregateRoot.GetType();
             Guid aggregateId = (Guid)type.GetProperty($"{type.Name}Id").GetValue(aggregateRoot, null);
             string aggregate = aggregateRoot.GetType().Name;
-
-            if(aggregateRoot.DomainEvents == null || aggregateRoot.DomainEvents.Count == 0)
-            {
-                aggregateRoot.Apply(new AggregateRootCreated());
-            }
 
             foreach (var @event in aggregateRoot.DomainEvents)
             {
