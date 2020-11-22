@@ -20,7 +20,7 @@ namespace EventSourcingDistilled.Domain.Features.Customers
 
             public Handler(IAppDbContext context) => _context = context;
 
-            public Task<Unit> Handle(Request request, CancellationToken cancellationToken) {
+            public async Task<Unit> Handle(Request request, CancellationToken cancellationToken) {
 
                 var customer = _context.Set<Customer>().First(x => x.CustomerId == request.CustomerId);
 
@@ -28,7 +28,9 @@ namespace EventSourcingDistilled.Domain.Features.Customers
 
                 _context.Store(customer);
 
-                return Task.FromResult(new Unit());
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return new Unit();
             }
         }
     }
