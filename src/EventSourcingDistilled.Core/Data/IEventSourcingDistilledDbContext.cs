@@ -8,8 +8,9 @@ namespace EventSourcingDistilled.Core.Data
 {
     public interface IEventSourcingDistilledDbContext
     {
-        IQueryable<T> Set<T>();
-        void Add(AggregateRoot aggregateRoot);
+        IQueryable<T> Set<T>()
+            where T : AggregateRoot;
+        void Save(AggregateRoot aggregateRoot);
         TAggregateRoot Find<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot;
 

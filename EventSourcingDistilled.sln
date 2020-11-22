@@ -18,11 +18,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingDistilled.Core
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "building-blocks", "building-blocks", "{6D304992-458E-44B1-8400-BB459909041E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.Domain", "building-blocks\BuildingBlocks.Domain\BuildingBlocks.Domain.csproj", "{1DCA3CA6-602D-43E8-8EBE-FF89A972D60A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildingBlocks.Domain", "building-blocks\BuildingBlocks.Domain\BuildingBlocks.Domain.csproj", "{1DCA3CA6-602D-43E8-8EBE-FF89A972D60A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.EventStore", "building-blocks\BuildingBlocks.EventStore\BuildingBlocks.EventStore.csproj", "{B350B174-0A12-470F-A63B-03EAC82A968F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildingBlocks.EventStore", "building-blocks\BuildingBlocks.EventStore\BuildingBlocks.EventStore.csproj", "{B350B174-0A12-470F-A63B-03EAC82A968F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcingDistilled.Domain", "src\EventSourcingDistilled.Domain\EventSourcingDistilled.Domain.csproj", "{94AB04CD-4D55-4F0F-A0EB-064B0FC4A9F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingDistilled.Domain", "src\EventSourcingDistilled.Domain\EventSourcingDistilled.Domain.csproj", "{94AB04CD-4D55-4F0F-A0EB-064B0FC4A9F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingDistilled.Domain.UnitTests", "test\EventSourcingDistilled.Domain.UnitTests\EventSourcingDistilled.Domain.UnitTests.csproj", "{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingDistilled.Api", "src\EventSourcingDistilled.Api\EventSourcingDistilled.Api.csproj", "{594B97D1-F38B-4C73-8252-AEC2DD6259BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingDistilled.Api.IntegrationTests", "test\EventSourcingDistilled.Api.IntegrationTests\EventSourcingDistilled.Api.IntegrationTests.csproj", "{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +100,42 @@ Global
 		{94AB04CD-4D55-4F0F-A0EB-064B0FC4A9F5}.Release|x64.Build.0 = Release|Any CPU
 		{94AB04CD-4D55-4F0F-A0EB-064B0FC4A9F5}.Release|x86.ActiveCfg = Release|Any CPU
 		{94AB04CD-4D55-4F0F-A0EB-064B0FC4A9F5}.Release|x86.Build.0 = Release|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Debug|x64.Build.0 = Debug|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Debug|x86.Build.0 = Debug|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Release|x64.ActiveCfg = Release|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Release|x64.Build.0 = Release|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Release|x86.ActiveCfg = Release|Any CPU
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9}.Release|x86.Build.0 = Release|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Debug|x64.Build.0 = Debug|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Debug|x86.Build.0 = Debug|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Release|x64.ActiveCfg = Release|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Release|x64.Build.0 = Release|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Release|x86.ActiveCfg = Release|Any CPU
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF}.Release|x86.Build.0 = Release|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Debug|x64.Build.0 = Debug|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Debug|x86.Build.0 = Debug|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Release|x64.ActiveCfg = Release|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Release|x64.Build.0 = Release|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Release|x86.ActiveCfg = Release|Any CPU
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -104,6 +146,9 @@ Global
 		{1DCA3CA6-602D-43E8-8EBE-FF89A972D60A} = {6D304992-458E-44B1-8400-BB459909041E}
 		{B350B174-0A12-470F-A63B-03EAC82A968F} = {6D304992-458E-44B1-8400-BB459909041E}
 		{94AB04CD-4D55-4F0F-A0EB-064B0FC4A9F5} = {EB5B648B-AB63-497C-9507-AD1F1D68EC87}
+		{E6E1C87C-6BC5-4371-A155-D29B850AB9B9} = {DAFC80CC-47C6-431F-B8D0-41D138746BDC}
+		{594B97D1-F38B-4C73-8252-AEC2DD6259BF} = {EB5B648B-AB63-497C-9507-AD1F1D68EC87}
+		{82E5BE0A-C795-4CB2-8284-CB346C58EEEE} = {DAFC80CC-47C6-431F-B8D0-41D138746BDC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A704C342-5265-46D1-8F08-B1270125ECCA}

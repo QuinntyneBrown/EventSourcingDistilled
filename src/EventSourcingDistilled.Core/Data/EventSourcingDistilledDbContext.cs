@@ -1,6 +1,6 @@
 ﻿using BuildingBlocks.Domain;
+using BuildingBlocks.EventStore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,25 +10,33 @@ namespace EventSourcingDistilled.Core.Data
 
     public class EventSourcingDistilledDbContext: IEventSourcingDistilledDbContext
     {
-        public IQueryable<T> Set<T>()
+        private readonly IEventStore _eventStore;
+        private readonly IRepository _repository;
+        public EventSourcingDistilledDbContext(IEventStore eventStore, IRepository repository)
         {
-            throw new NotImplementedException();
+            _eventStore = eventStore;
+            _repository = repository;
+        }
+        public IQueryable<TAggregateRoot> Set<TAggregateRoot>()
+            where TAggregateRoot: AggregateRoot
+        {
+            return _repository.Query<TAggregateRoot>().AsQueryable();
         }
 
-        public void Add(AggregateRoot aggregateRoot)
+        public void Save(AggregateRoot aggregateRoot)
         {
-            throw new NotImplementedException();
+            _eventStore.Save(aggregateRoot);
         }
 
         public TAggregateRoot Find<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot
         {
-            throw new NotImplementedException();
+            return _repository.Query<TAggregateRoot>(id);
         }
 
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return 1;
         }
     }
 }
