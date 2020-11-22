@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSourcingDistilled.Api.Migrations
 {
     [DbContext(typeof(EventStoreDbContext))]
-    [Migration("20201122012940_InitialCreate")]
+    [Migration("20201122122755_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,7 @@ namespace EventSourcingDistilled.Api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Aggregate")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AggregateDotNetType")
                         .HasColumnType("nvarchar(max)");
@@ -55,6 +55,8 @@ namespace EventSourcingDistilled.Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("StoredEventId");
+
+                    b.HasIndex("StreamId", "Aggregate");
 
                     b.ToTable("StoredEvents");
                 });

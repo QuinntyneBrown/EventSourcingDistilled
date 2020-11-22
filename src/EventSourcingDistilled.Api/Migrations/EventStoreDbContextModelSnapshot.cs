@@ -26,7 +26,7 @@ namespace EventSourcingDistilled.Api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Aggregate")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AggregateDotNetType")
                         .HasColumnType("nvarchar(max)");
@@ -53,6 +53,8 @@ namespace EventSourcingDistilled.Api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("StoredEventId");
+
+                    b.HasIndex("StreamId", "Aggregate");
 
                     b.ToTable("StoredEvents");
                 });

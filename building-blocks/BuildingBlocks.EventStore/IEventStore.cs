@@ -1,6 +1,5 @@
 using BuildingBlocks.Domain;
-using System;
-using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BuildingBlocks.EventStore
@@ -9,11 +8,7 @@ namespace BuildingBlocks.EventStore
     {
         void Save(AggregateRoot aggregateRoot);
 
-        TAggregateRoot Load<TAggregateRoot>(Guid id)
-            where TAggregateRoot : AggregateRoot;
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
-        void Subscribe(Action<EventStoreChanged> onNext);
-
-        Task<IEnumerable<StoredEvent>> GetEvents();
     }
 }

@@ -1,7 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace BuildingBlocks.EventStore
 {
+    [Index("StreamId","Aggregate")]
     public class StoredEvent
     {
         public Guid StoredEventId { get; set; }
@@ -12,7 +14,7 @@ namespace BuildingBlocks.EventStore
         public int Sequence { get; set; }
         public string Data { get; set; }
         public string DotNetType { get; set; }
-        public System.DateTime CreatedOn { get; set; }
+        public DateTime CreatedOn { get; set; }
         public int Version { get; set; }
     }
 

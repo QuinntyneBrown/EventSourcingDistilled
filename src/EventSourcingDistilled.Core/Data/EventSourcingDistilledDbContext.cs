@@ -11,19 +11,19 @@ namespace EventSourcingDistilled.Core.Data
     public class EventSourcingDistilledDbContext: IEventSourcingDistilledDbContext
     {
         private readonly IEventStore _eventStore;
-        private readonly IRepository _repository;
-        public EventSourcingDistilledDbContext(IEventStore eventStore, IRepository repository)
+        private readonly IAggregateSet _aggregateSet;
+        public EventSourcingDistilledDbContext(IEventStore eventStore, IAggregateSet aggregateSet)
         {
             _eventStore = eventStore;
-            _repository = repository;
+            _aggregateSet = aggregateSet;
         }
         public IQueryable<TAggregateRoot> Set<TAggregateRoot>()
             where TAggregateRoot: AggregateRoot
         {
-            return _repository.Query<TAggregateRoot>().AsQueryable();
+            return _aggregateSet.Set<TAggregateRoot>();
         }
 
-        public void Save(AggregateRoot aggregateRoot)
+        public void Store(AggregateRoot aggregateRoot)
         {
             _eventStore.Save(aggregateRoot);
         }
@@ -31,12 +31,12 @@ namespace EventSourcingDistilled.Core.Data
         public TAggregateRoot Find<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot
         {
-            return _repository.Query<TAggregateRoot>(id);
+            return _aggregateSet.Find<TAggregateRoot>(id);
         }
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            return 1;
+            return await _eventStore.SaveChangesAsync(cancellationToken);
         }
     }
 }

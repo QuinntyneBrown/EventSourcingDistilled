@@ -7,5 +7,6 @@ namespace BuildingBlocks.EventStore
         public EventStoreDbContext(DbContextOptions options)
             : base(options) { }
         public DbSet<StoredEvent> StoredEvents { get; private set; }
+        public DbSet<SnapShot> SnapShots { get; private set; }
     }
 }

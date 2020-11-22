@@ -10,7 +10,7 @@ namespace EventSourcingDistilled.Core.Data
     {
         IQueryable<T> Set<T>()
             where T : AggregateRoot;
-        void Save(AggregateRoot aggregateRoot);
+        void Store(AggregateRoot aggregateRoot);
         TAggregateRoot Find<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot;
 

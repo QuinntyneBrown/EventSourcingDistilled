@@ -25,18 +25,11 @@ namespace EventSourcingDistilled.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost(Name = "CreateCustomerRoute")]
+        [HttpPost(Name = "UpsertCustomerRoute")]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(CreateCustomer.Response), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<CreateCustomer.Response>> Create([FromBody] CreateCustomer.Request request)
-            => await _mediator.Send(request);
-
-        [HttpPut(Name = "UpdateCustomerRoute")]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(UpdateCustomer.Response), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<UpdateCustomer.Response>> Update([FromBody] UpdateCustomer.Request request)
+        [ProducesResponseType(typeof(UpsertCustomer.Response), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<UpsertCustomer.Response>> Update([FromBody] UpsertCustomer.Request request)
             => await _mediator.Send(request);
 
         [HttpDelete("{customerId}", Name = "RemoveCustomerRoute")]
@@ -70,29 +63,6 @@ namespace EventSourcingDistilled.Api.Controllers
             return response;
         }
 
-        [HttpGet("ss")]
-        public async Task ServerSentEvents(CancellationToken cancellationToken)
-        {
-            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
-            var response = _httpContextAccessor.HttpContext.Response;
-
-            response.Headers.Add("Content-Type", "text/event-stream");
-
-            _eventStore.Subscribe(async e =>
-            {
-                if (e.Event.Aggregate == "Customer")
-                {
-                    await response
-                    .WriteAsync($"data: {JsonConvert.SerializeObject(e)}\r\r");
-
-                    response.Body.Flush();
-                }
-
-            });
-
-            await tcs.Task;
-
-        }
     }
 }

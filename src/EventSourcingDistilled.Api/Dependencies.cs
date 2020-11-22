@@ -51,15 +51,11 @@ namespace EventSourcingDistilled.Api
 
             services.AddMediatR(typeof(GetCustomers));
 
-            services.AddSingleton<ITaskQueue, TaskQueue>();
-
-            services.AddHostedService<QueueBackgroundService>();
-
             services.AddTransient<IEventStoreDbContext, EventStoreDbContext>();
 
-            services.AddSingleton<IEventStore, EventStore>();
+            services.AddTransient<IAggregateSet, AggregateSet>();
 
-            services.AddSingleton<IRepository, Repository>();
+            services.AddSingleton<IEventStore, EventStore>();
 
             services.AddTransient<IEventSourcingDistilledDbContext, EventSourcingDistilledDbContext>();
 

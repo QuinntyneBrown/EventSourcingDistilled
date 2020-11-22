@@ -26,7 +26,7 @@ namespace EventSourcingDistilled.Domain.Features.Customers
 
                 customer.Reomve();
 
-                _context.Save(customer);
+                _context.Store(customer);
 
                 return Task.FromResult(new Unit());
             }

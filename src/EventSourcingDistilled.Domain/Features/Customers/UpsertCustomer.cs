@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace EventSourcingDistilled.Domain.Features.Customers
 {
-    public class UpdateCustomer
+    public class UpsertCustomer
     {
         public class Validator : AbstractValidator<Request>
         {
@@ -34,22 +34,31 @@ namespace EventSourcingDistilled.Domain.Features.Customers
 
             public Handler(IEventSourcingDistilledDbContext context) => _context = context;
 
-            public Task<Response> Handle(Request request, CancellationToken cancellationToken) {
+            public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {
 
                 var customer = _context.Set<Customer>().FirstOrDefault(x => x.CustomerId == request.Customer.CustomerId);
 
-                customer.Update(
-                    request.Customer.Firstname,
-                    request.Customer.Lastname,
-                    request.Customer.Email,
-                    request.Customer.PhoneNumber);
+                if (customer == null)
+                {
+                    customer = new Customer(request.Customer.Firstname, request.Customer.Lastname);
+                }
+                else
+                {
+                    customer.Update(
+                        request.Customer.Firstname,
+                        request.Customer.Lastname,
+                        request.Customer.Email,
+                        request.Customer.PhoneNumber);
+                }
 
-                _context.Save(customer);
+                _context.Store(customer);
 
-                return Task.FromResult(new Response()
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return new Response()
                 {
                     Customer = customer.ToDto()
-                });
+                };
             }
         }
     }

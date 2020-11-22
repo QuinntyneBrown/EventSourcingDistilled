@@ -14,7 +14,7 @@ namespace EventSourcingDistilled.Api.Migrations
                     StoredEventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StreamId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Aggregate = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Aggregate = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     AggregateDotNetType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sequence = table.Column<int>(type: "int", nullable: false),
                     Data = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -26,6 +26,11 @@ namespace EventSourcingDistilled.Api.Migrations
                 {
                     table.PrimaryKey("PK_StoredEvents", x => x.StoredEventId);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StoredEvents_StreamId_Aggregate",
+                table: "StoredEvents",
+                columns: new[] { "StreamId", "Aggregate" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

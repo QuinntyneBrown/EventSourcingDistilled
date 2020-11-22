@@ -18,7 +18,7 @@ namespace BuildingBlocks.Domain
             EnsureValidState();
             RaiseDomainEvent(@event);
         }
-        protected abstract void When(object @event);
+        protected abstract void When(dynamic @event);
         protected abstract void EnsureValidState();
     }
 
