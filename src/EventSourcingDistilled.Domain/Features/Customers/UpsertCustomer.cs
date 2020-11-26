@@ -1,10 +1,10 @@
-using FluentValidation;
-using MediatR;
 using BuildingBlocks.Abstractions;
 using EventSourcingDistilled.Core.Models;
+using FluentValidation;
+using MediatR;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace EventSourcingDistilled.Domain.Features.Customers
 {

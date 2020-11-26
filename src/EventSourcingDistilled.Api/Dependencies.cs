@@ -3,7 +3,6 @@ using BuildingBlocks.EventStore;
 using EventSourcingDistilled.Core.Data;
 using EventSourcingDistilled.Domain.Features.Customers;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -50,14 +49,10 @@ namespace EventSourcingDistilled.Api
 
             services.AddMediatR(typeof(GetCustomers));
 
-            services.AddEventStore();
-
-            services.AddDbContext<EventStoreDbContext>(options =>
+            services.AddEventStore(new EventStoreBuilderOptions
             {
-                options.UseSqlServer(configuration["Data:DefaultConnection:ConnectionString"],
-                    builder => builder.MigrationsAssembly("EventSourcingDistilled.Api")
-                        .EnableRetryOnFailure())
-                .EnableSensitiveDataLogging();
+                ConnectionString = configuration["Data:DefaultConnection:ConnectionString"],
+                MigrationAssembly = "EventSourcingDistilled.Api"
             });
 
             services.AddTransient<IAppDbContext, EventSourcingDistilledDbContext>();

@@ -1,5 +1,4 @@
 using BuildingBlocks.Abstractions;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,16 +9,16 @@ namespace BuildingBlocks.EventStore
 {
     public class EventStore : IEventStore
     {
-        private readonly IServiceScopeFactory _serviceScopeFactory;
-        private readonly List<StoredEvent> storedEvents = new List<StoredEvent>();
-        public EventStore(
-            IServiceScopeFactory serviceScopeFactory = default
-            )
+        private readonly List<StoredEvent> _changes = new List<StoredEvent>();
+        private readonly IDateTime _dateTime;
+        private readonly IEventStoreDbContext _context;
+        public EventStore(IDateTime dateTime, IEventStoreDbContext context)
         {
-            _serviceScopeFactory = serviceScopeFactory;
+            _dateTime = dateTime;
+            _context = context;
         }
 
-        public void Save(AggregateRoot aggregateRoot)
+        public void Store(AggregateRoot aggregateRoot)
         {
             var type = aggregateRoot.GetType();
             Guid aggregateId = (Guid)type.GetProperty($"{type.Name}Id").GetValue(aggregateRoot, null);
@@ -27,7 +26,7 @@ namespace BuildingBlocks.EventStore
 
             foreach (var @event in aggregateRoot.DomainEvents)
             {
-                storedEvents.Add(new StoredEvent()
+                _changes.Add(new StoredEvent()
                 {
                     StoredEventId = Guid.NewGuid(),
                     Aggregate = aggregate,
@@ -36,7 +35,7 @@ namespace BuildingBlocks.EventStore
                     StreamId = aggregateId,
                     DotNetType = @event.GetType().AssemblyQualifiedName,
                     Type = @event.GetType().Name,
-                    CreatedOn = System.DateTime.UtcNow,
+                    CreatedOn = _dateTime.UtcNow,
                     Sequence = 0
                 });
             }
@@ -45,21 +44,16 @@ namespace BuildingBlocks.EventStore
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            using (var scope = _serviceScopeFactory.CreateScope())
+            foreach (var e in _changes)
             {
-                var context = scope.ServiceProvider.GetRequiredService<IEventStoreDbContext>();
-
-                foreach(var e in storedEvents)
-                {
-                    context.StoredEvents.Add(e);
-                }
-                
-                var result =  await context.SaveChangesAsync(cancellationToken);
-
-                storedEvents.Clear();
-
-                return result;
+                _context.StoredEvents.Add(e);
             }
+
+            var result = await _context.SaveChangesAsync(cancellationToken);
+
+            _changes.Clear();
+
+            return result;
         }
 
     }

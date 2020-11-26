@@ -1,12 +1,8 @@
-using BuildingBlocks.EventStore;
 using EventSourcingDistilled.Domain.Features.Customers;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace EventSourcingDistilled.Api.Controllers
@@ -16,12 +12,9 @@ namespace EventSourcingDistilled.Api.Controllers
     public class CustomersController
     {
         private readonly IMediator _mediator;
-        private readonly IEventStore _eventStore;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public CustomersController(IMediator mediator, IEventStore eventStore, IHttpContextAccessor httpContextAccessor)
+
+        public CustomersController(IMediator mediator)
         {
-            _eventStore = eventStore;
-            _httpContextAccessor = httpContextAccessor;
             _mediator = mediator;
         }
 
@@ -62,7 +55,5 @@ namespace EventSourcingDistilled.Api.Controllers
 
             return response;
         }
-
-
     }
 }

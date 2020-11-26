@@ -27,12 +27,10 @@ namespace EventSourcingDistilled.Domain.Features.Customers
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {
 
-                var query = from customer in _context.Set<Customer>()
-                        where customer.CustomerId == request.CustomerId
-                        select customer.ToDto();
+                var customer = await _context.FindAsync<Customer>(request.CustomerId);
 
                 return new Response() { 
-                    Customer = query.SingleOrDefault()
+                    Customer = customer.ToDto()
                 };
             }
         }

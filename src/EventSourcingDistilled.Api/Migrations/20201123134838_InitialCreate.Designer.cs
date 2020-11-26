@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSourcingDistilled.Api.Migrations
 {
     [DbContext(typeof(EventStoreDbContext))]
-    [Migration("20201122122755_InitialCreate")]
+    [Migration("20201123134838_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,23 @@ namespace EventSourcingDistilled.Api.Migrations
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
+
+            modelBuilder.Entity("BuildingBlocks.EventStore.SnapShot", b =>
+                {
+                    b.Property<Guid>("SnapShotId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SnapShotId");
+
+                    b.ToTable("SnapShots");
+                });
 
             modelBuilder.Entity("BuildingBlocks.EventStore.StoredEvent", b =>
                 {

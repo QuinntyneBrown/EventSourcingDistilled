@@ -6,9 +6,8 @@ namespace BuildingBlocks.EventStore
 {
     public interface IEventStore
     {
-        void Save(AggregateRoot aggregateRoot);
+        void Store(AggregateRoot aggregateRoot);
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-
     }
 }

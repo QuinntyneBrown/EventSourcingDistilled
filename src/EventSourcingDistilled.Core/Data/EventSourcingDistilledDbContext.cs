@@ -21,11 +21,11 @@ namespace EventSourcingDistilled.Core.Data
             => _aggregateSet.Set<TAggregateRoot>();
 
         public void Store(AggregateRoot aggregateRoot)
-            => _eventStore.Save(aggregateRoot);
+            => _eventStore.Store(aggregateRoot);
 
-        public TAggregateRoot Find<TAggregateRoot>(Guid id)
+        public Task<TAggregateRoot> FindAsync<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot
-            => _aggregateSet.Find<TAggregateRoot>(id);
+            => _aggregateSet.FindAsync<TAggregateRoot>(id);
 
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
             => await _eventStore.SaveChangesAsync(cancellationToken);
