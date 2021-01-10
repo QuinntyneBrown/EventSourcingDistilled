@@ -13,17 +13,17 @@ namespace EventSourcingDistilled.Domain.Features
 
         public class Handler : IRequestHandler<Request, Unit>
         {
-            private readonly IEventStore _context;
+            private readonly IEventStore _store;
 
-            public Handler(IEventStore context) => _context = context;
+            public Handler(IEventStore store) => _store = store;
 
             public async Task<Unit> Handle(Request request, CancellationToken cancellationToken) {
 
-                var customer = await _context.LoadAsync<Customer>(request.CustomerId);
+                var customer = await _store.LoadAsync<Customer>(request.CustomerId);
                 
                 customer.Reomve();
 
-                await _context.SaveChangesAsync(cancellationToken);
+                await _store.SaveChangesAsync(cancellationToken);
 
                 return new();
             }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace BuildingBlocks.Abstractions
@@ -14,6 +13,5 @@ namespace BuildingBlocks.Abstractions
         Task<TAggregateRoot> FindAsync<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot;
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

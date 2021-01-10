@@ -1,6 +1,7 @@
 using BuildingBlocks.Abstractions;
 using BuildingBlocks.EventStore;
 using EventSourcingDistilled.Api;
+using EventSourcingDistilled.Core.Data;
 using EventSourcingDistilled.Testing.Factories;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -16,7 +17,7 @@ namespace EventSourcingDistilled.Testing
 {
     public class ApiTestFixture : WebApplicationFactory<Startup>, IDisposable
     {
-        private BuildingBlocks.Abstractions.IAppDbContext _context;
+        private IEventSourcingDistilledDbContext _context;
         private IConfiguration _configuration;
         private readonly Guid _correlationId = Guid.NewGuid();
 
@@ -46,28 +47,25 @@ namespace EventSourcingDistilled.Testing
                 {
                     var scopedServices = scope.ServiceProvider;
 
-                    var context = scopedServices.GetRequiredService<BuildingBlocks.Abstractions.IAppDbContext>();
-
                     
 
                 }
             });
         }
-        public BuildingBlocks.Abstractions.IAppDbContext Context
+        public IEventSourcingDistilledDbContext Context
         {
             get
             {
                 if (_context == null)
                 {
-                    var options = new DbContextOptionsBuilder<EventStoreDbContext>()
+                    var options = new DbContextOptionsBuilder()
                         .UseSqlServer(_configuration[DataDefaultConnectionString])
                         .Options;
 
-                    var context = new EventStoreDbContext(options);
+                    
                     var dateTime = new MachineDateTime();
-                    var eventStore = new EventStore(context, dateTime, new TestCorrelationIdAccessor(_correlationId));
-                    var aggregateSet = new AggregateSet(context, dateTime);
-                    _context = new AppDbContext(eventStore, aggregateSet);
+                    _context = new EventSourcingDistilledDbContext(options,dateTime,new TestCorrelationIdAccessor(_correlationId));
+
                 }
 
                 return _context;
@@ -78,17 +76,15 @@ namespace EventSourcingDistilled.Testing
             }
         }
 
-
-
-
-        
         protected override void Dispose(bool disposing)
         {
-            var options = new DbContextOptionsBuilder<EventStoreDbContext>()
+            var options = new DbContextOptionsBuilder()
                 .UseSqlServer(_configuration[DataDefaultConnectionString])
                 .Options;
 
-            var context = new EventStoreDbContext(options);
+            var dateTime = new MachineDateTime();
+
+            var context = new EventSourcingDistilledDbContext(options, dateTime, new TestCorrelationIdAccessor(_correlationId));
 
             foreach (var storedEvent in context.StoredEvents.Where(x => x.CorrelationId == _correlationId))
             {

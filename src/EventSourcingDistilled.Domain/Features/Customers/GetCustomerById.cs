@@ -1,4 +1,5 @@
 using BuildingBlocks.Abstractions;
+using EventSourcingDistilled.Core.Data;
 using EventSourcingDistilled.Core.Models;
 using MediatR;
 using System;
@@ -16,13 +17,13 @@ namespace EventSourcingDistilled.Domain.Features
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private readonly IAppDbContext _context;
+            private readonly IEventSourcingDistilledDbContext _context;
 
-            public Handler(IAppDbContext context) => _context = context;
+            public Handler(IEventSourcingDistilledDbContext context) => _context = context;
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {
 
-                var customer = await _context.FindAsync<Customer>(request.CustomerId);
+                var customer = await _context.Customers.FindAsync(request.CustomerId);
 
                 return new (customer.ToDto());
             }

@@ -25,7 +25,7 @@ namespace EventSourcingDistilled.Domain.Features
         public class Handler : IRequestHandler<Request, Response>
         {
             private readonly IEventStore _store;
-
+            
             public Handler(IEventStore store) => _store = store;
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {

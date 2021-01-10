@@ -1,29 +1,17 @@
-﻿using BuildingBlocks.Abstractions;
+using BuildingBlocks.Abstractions;
 using BuildingBlocks.EventStore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using EventSourcingDistilled.Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace EventSourcingDistilled.Core.Data
 {
-    public class EventSourcingDistilledDbContext : BuildingBlocks.Abstractions.IAppDbContext
+    public class EventSourcingDistilledDbContext: EventStore, IEventSourcingDistilledDbContext
     {
-        private readonly BuildingBlocks.EventStore.IEventStore _eventStore;
-        private readonly IAggregateSet _aggregateSet;
-        public EventSourcingDistilledDbContext(BuildingBlocks.EventStore.IEventStore eventStore, IAggregateSet aggregateSet)
-        {
-            _eventStore = eventStore;
-            _aggregateSet = aggregateSet;
+        public EventSourcingDistilledDbContext(DbContextOptions options, IDateTime dateTime, ICorrelationIdAccessor correlationIdAccessor)
+            :base(options,dateTime, correlationIdAccessor) {
         }
-        public async Task<TAggregateRoot> FindAsync<TAggregateRoot>(Guid id) where TAggregateRoot : AggregateRoot
-            => await _eventStore.LoadAsync<TAggregateRoot>(id);
 
-        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
-            => await _eventStore.SaveChangesAsync(cancellationToken);
+        public DbSet<Customer> Customers { get; private set; }
 
-        public IQueryable<T> Set<T>(List<Guid> ids = null) where T : AggregateRoot
-            => _aggregateSet.Set<T>(ids);
     }
 }

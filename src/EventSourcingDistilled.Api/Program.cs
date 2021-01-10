@@ -1,4 +1,5 @@
 using BuildingBlocks.EventStore;
+using EventSourcingDistilled.Core.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,7 @@ namespace EventSourcingDistilled.Api
 
             using (var scope = services.CreateScope())
             {
-                var context = scope.ServiceProvider.GetRequiredService<EventStoreDbContext>();
+                var context = scope.ServiceProvider.GetRequiredService<EventSourcingDistilledDbContext>();
                 var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
 
                 if (args.Contains("ci"))

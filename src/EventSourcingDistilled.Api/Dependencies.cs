@@ -49,8 +49,12 @@ namespace EventSourcingDistilled.Api
             services.AddHttpContextAccessor();
 
             services.AddMediatR(typeof(GetCustomers));
+            
+            services.AddTransient<IEventStore, EventStore>();
+            services.AddSingleton<IDateTime, MachineDateTime>();
+            services.AddTransient<ICorrelationIdAccessor, CorrelationIdAccessor>();
 
-            services.AddEventStore((options =>
+            services.AddDbContext<EventSourcingDistilledDbContext>((options =>
             {
                 options
                 .LogTo(Console.WriteLine)
@@ -58,11 +62,10 @@ namespace EventSourcingDistilled.Api
                     builder => builder
                     .MigrationsAssembly("EventSourcingDistilled.Api")
                         .EnableRetryOnFailure())
-                .UseLoggerFactory(EventStoreDbContext.ConsoleLoggerFactory)
                 .EnableSensitiveDataLogging();
             }));
 
-            services.AddTransient<BuildingBlocks.Abstractions.IAppDbContext, EventSourcingDistilledDbContext>();
+            services.AddTransient<IEventSourcingDistilledDbContext, EventSourcingDistilledDbContext>();
 
             services.AddControllers();
         }

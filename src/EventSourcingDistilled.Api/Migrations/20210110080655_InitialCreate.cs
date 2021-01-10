@@ -8,16 +8,19 @@ namespace EventSourcingDistilled.Api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "SnapShots",
+                name: "Customers",
                 columns: table => new
                 {
-                    SnapShotId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Data = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Firstname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Lastname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SnapShots", x => x.SnapShotId);
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,7 +53,7 @@ namespace EventSourcingDistilled.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "SnapShots");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "StoredEvents");

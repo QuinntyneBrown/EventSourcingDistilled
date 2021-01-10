@@ -41,7 +41,7 @@ namespace EventSourcingDistilled.Api.IntegrationTests
 
             var response = JsonConvert.DeserializeObject<CreateCustomer.Response>(await httpResponseMessage.Content.ReadAsStringAsync());
 
-            var sut = await context.FindAsync<Customer>(response.Customer.CustomerId);
+            var sut = context.Customers.First();
 
             Assert.NotEqual(default, response.Customer.CustomerId);
         }
@@ -63,7 +63,7 @@ namespace EventSourcingDistilled.Api.IntegrationTests
 
             httpResponseMessage.EnsureSuccessStatusCode();
 
-            var removedCustomer = await context.FindAsync<Customer>(customer.CustomerId);
+            var removedCustomer = await context.LoadAsync<Customer>(customer.CustomerId);
 
             Assert.NotEqual(default, removedCustomer.Deleted);
         }
@@ -83,7 +83,7 @@ namespace EventSourcingDistilled.Api.IntegrationTests
 
             httpResponseMessage.EnsureSuccessStatusCode();
 
-            var sut = await context.FindAsync<Customer>(customer.CustomerId);
+            var sut = await context.LoadAsync<Customer>(customer.CustomerId);
 
         }
 
