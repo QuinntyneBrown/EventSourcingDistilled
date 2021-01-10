@@ -1,4 +1,3 @@
-using BuildingBlocks.Abstractions;
 using BuildingBlocks.EventStore;
 using EventSourcingDistilled.Core.Data;
 using EventSourcingDistilled.Domain.Features;
@@ -20,13 +19,13 @@ namespace EventSourcingDistilled.Api
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "",
+                    Title = "Event Sourcing Distilled",
                     Description = "",
                     TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {
-                        Name = "",
-                        Email = ""
+                        Name = "Quinntyne Brown",
+                        Email = "quinntynebrown@gmail.com"
                     },
                     License = new OpenApiLicense
                     {
@@ -49,10 +48,8 @@ namespace EventSourcingDistilled.Api
             services.AddHttpContextAccessor();
 
             services.AddMediatR(typeof(GetCustomers));
-            
-            services.AddTransient<IEventStore, EventStore>();
-            services.AddSingleton<IDateTime, MachineDateTime>();
-            services.AddTransient<ICorrelationIdAccessor, CorrelationIdAccessor>();
+
+            services.AddEventStore();
 
             services.AddDbContext<EventSourcingDistilledDbContext>((options =>
             {

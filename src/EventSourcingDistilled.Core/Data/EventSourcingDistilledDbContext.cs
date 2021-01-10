@@ -13,5 +13,10 @@ namespace EventSourcingDistilled.Core.Data
 
         public DbSet<Customer> Customers { get; private set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>()
+                .HasQueryFilter(e => !e.Deleted.HasValue);
+        }
     }
 }

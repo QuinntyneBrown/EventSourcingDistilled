@@ -6,13 +6,6 @@ namespace EventSourcingDistilled.Domain.Features
     public static class CustomerExtensions
     {
         public static CustomerDto ToDto(this Customer customer)
-        {
-            return new CustomerDto
-            {
-                CustomerId = customer.CustomerId,
-                Firstname = customer.Firstname,
-                Lastname = customer.Lastname,
-            };
-        }
+            => new(customer.CustomerId, customer.Firstname, customer.Lastname, customer.Email, customer.PhoneNumber);
     }
 }

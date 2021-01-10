@@ -1,5 +1,5 @@
 using BuildingBlocks.Abstractions;
-using EventSourcingDistilled.Core.DomainEvents.Customer;
+using EventSourcingDistilled.Core.DomainEvents;
 using System;
 
 namespace EventSourcingDistilled.Core.Models
@@ -27,7 +27,6 @@ namespace EventSourcingDistilled.Core.Models
 
         private void When(CustomerUpdated @event)
         {
-            CustomerId = @event.CustomerId;
             Firstname = @event.Firstname;
             Lastname = @event.Lastname;
         }
@@ -47,9 +46,9 @@ namespace EventSourcingDistilled.Core.Models
             Apply(new CustomerUpdated(firstname, lastname, email, phoneNumber));
         }
 
-        public void Reomve()
+        public void Reomve(DateTime deleted)
         {
-            Apply(new CustomerRemoved());
+            Apply(new CustomerRemoved(deleted));
         }
     }
 }

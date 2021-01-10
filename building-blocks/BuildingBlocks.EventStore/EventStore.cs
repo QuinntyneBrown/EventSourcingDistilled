@@ -1,13 +1,12 @@
 using BuildingBlocks.Abstractions;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static Newtonsoft.Json.JsonConvert;
 using static BuildingBlocks.Abstractions.AggregateRoot;
+using static Newtonsoft.Json.JsonConvert;
 
 namespace BuildingBlocks.EventStore
 {
@@ -16,7 +15,7 @@ namespace BuildingBlocks.EventStore
         private readonly List<StoredEvent> _changes = new List<StoredEvent>();
         private readonly IDateTime _dateTime;
         private readonly ICorrelationIdAccessor _correlationIdAccessor;
-        private List<IAggregateRoot> _trackedAggregates = new List<IAggregateRoot>();
+        private readonly List<IAggregateRoot> _trackedAggregates = new List<IAggregateRoot>();
         
         public EventStore(DbContextOptions options, IDateTime dateTime, ICorrelationIdAccessor correlationIdAccessor)
             :base(options)
@@ -27,7 +26,7 @@ namespace BuildingBlocks.EventStore
             _correlationIdAccessor = correlationIdAccessor;
         }
 
-        public DbSet<StoredEvent> StoredEvents { get; set; }
+        public DbSet<StoredEvent> StoredEvents { get; protected set; }
 
         public async Task<TAggregateRoot> LoadAsync<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot
@@ -47,7 +46,7 @@ namespace BuildingBlocks.EventStore
             return aggregate;
         }
 
-        public new void Add(IAggregateRoot aggregateRoot)
+        public void Add(IAggregateRoot aggregateRoot)
         {
             _trackedAggregates.Add(aggregateRoot);
 

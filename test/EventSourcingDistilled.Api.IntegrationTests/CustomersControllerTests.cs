@@ -25,14 +25,9 @@ namespace EventSourcingDistilled.Api.IntegrationTests
         {
             var context = _fixture.Context;
 
-            StringContent stringContent = new StringContent(JsonConvert.SerializeObject(new { 
-                Customer = new CustomerDto
-                {
-                    Email = "quinntynebrown@gmail.com",
-                    PhoneNumber = "555-967-1111",
-                    Firstname = "Quinntyne",
-                    Lastname = "Brown"
-                }
+            StringContent stringContent = new StringContent(JsonConvert.SerializeObject(new
+            {
+                Customer = new CustomerDto(default, "Quinn", "Brown", default, default)
             }), Encoding.UTF8, "application/json");
 
             using var client = _fixture.CreateClient();
