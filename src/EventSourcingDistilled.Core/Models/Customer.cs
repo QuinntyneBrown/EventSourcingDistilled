@@ -1,9 +1,11 @@
 using BuildingBlocks.EventStore;
 using EventSourcingDistilled.Core.DomainEvents;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace EventSourcingDistilled.Core.Models
 {
+    [Index("Email")]
     public class Customer : AggregateRoot
     {
         public Guid CustomerId { get; private set; }

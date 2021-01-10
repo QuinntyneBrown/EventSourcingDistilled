@@ -14,7 +14,7 @@ namespace EventSourcingDistilled.Api.Migrations
                     CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Firstname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Lastname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -32,7 +32,6 @@ namespace EventSourcingDistilled.Api.Migrations
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Aggregate = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     AggregateDotNetType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Sequence = table.Column<int>(type: "int", nullable: false),
                     Data = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DotNetType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -43,6 +42,11 @@ namespace EventSourcingDistilled.Api.Migrations
                 {
                     table.PrimaryKey("PK_StoredEvents", x => x.StoredEventId);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Customers_Email",
+                table: "Customers",
+                column: "Email");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StoredEvents_StreamId_Aggregate",

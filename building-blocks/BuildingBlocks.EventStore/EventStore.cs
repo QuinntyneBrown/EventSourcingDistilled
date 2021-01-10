@@ -65,7 +65,22 @@ namespace BuildingBlocks.EventStore
                 }
 
                 StoredEvents.AddRange(aggregateRoot.DomainEvents
-                    .Select(@event => @event.ToStoredEvent(aggregateRoot, _correlationIdAccessor.CorrelationId)));
+                    .Select(@event => {
+                        var type = aggregateRoot.GetType();
+
+                        return new StoredEvent
+                        {
+                            StoredEventId = Guid.NewGuid(),
+                            Aggregate = aggregateRoot.GetType().Name,
+                            AggregateDotNetType = aggregateRoot.GetType().AssemblyQualifiedName,
+                            Data = SerializeObject(@event),
+                            StreamId = (Guid)type.GetProperty($"{type.Name}Id").GetValue(aggregateRoot, null),
+                            DotNetType = @event.GetType().AssemblyQualifiedName,
+                            Type = @event.GetType().Name,
+                            CreatedOn = @event.Created,
+                            CorrelationId = _correlationIdAccessor.CorrelationId
+                        };
+                    }));
             }
 
             _trackedAggregates.Clear();
@@ -74,25 +89,4 @@ namespace BuildingBlocks.EventStore
         }
     }
 
-    public static class EventExtensions
-    {
-        public static StoredEvent ToStoredEvent(this IEvent @event, IAggregateRoot aggregateRoot, Guid correlationId)
-        {
-            var type = aggregateRoot.GetType();
-
-            return new StoredEvent
-            {
-                StoredEventId = Guid.NewGuid(),
-                Aggregate = aggregateRoot.GetType().Name,
-                AggregateDotNetType = aggregateRoot.GetType().AssemblyQualifiedName,
-                Data = SerializeObject(@event),
-                StreamId = (Guid)type.GetProperty($"{type.Name}Id").GetValue(aggregateRoot, null),
-                DotNetType = @event.GetType().AssemblyQualifiedName,
-                Type = @event.GetType().Name,
-                CreatedOn = @event.Created,
-                Sequence = 0,
-                CorrelationId = correlationId
-            };
-        }
-    }
 }

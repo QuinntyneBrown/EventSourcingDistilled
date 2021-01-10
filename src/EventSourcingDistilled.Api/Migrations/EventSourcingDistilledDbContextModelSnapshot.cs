@@ -43,9 +43,6 @@ namespace EventSourcingDistilled.Api.Migrations
                     b.Property<string>("DotNetType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Sequence")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("StreamId")
                         .HasColumnType("uniqueidentifier");
 
@@ -72,7 +69,7 @@ namespace EventSourcingDistilled.Api.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Firstname")
                         .HasColumnType("nvarchar(max)");
@@ -84,6 +81,8 @@ namespace EventSourcingDistilled.Api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CustomerId");
+
+                    b.HasIndex("Email");
 
                     b.ToTable("Customers");
                 });
