@@ -1,7 +1,6 @@
-using BuildingBlocks.Abstractions;
 using EventSourcingDistilled.Core.Data;
-using EventSourcingDistilled.Core.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -21,9 +20,8 @@ namespace EventSourcingDistilled.Domain.Features
 
             public Handler(IEventSourcingDistilledDbContext context) => _context = context;
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {
-                return new (_context.Customers.Select(x => x.ToDto()).ToList());
-            }
+            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+                => new(await _context.Customers.Select(x => x.ToDto()).ToListAsync());
         }
     }
 }

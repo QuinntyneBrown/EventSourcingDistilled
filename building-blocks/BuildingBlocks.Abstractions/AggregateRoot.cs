@@ -13,6 +13,7 @@ namespace BuildingBlocks.Abstractions
     public abstract class AggregateRoot: IAggregateRoot
     {
         internal List<object> _events = new List<object>();
+
         [NotMapped]
         public IReadOnlyCollection<object> DomainEvents => _events.AsReadOnly();
 

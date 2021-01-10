@@ -21,6 +21,8 @@ namespace BuildingBlocks.EventStore
         public EventStore(DbContextOptions options, IDateTime dateTime, ICorrelationIdAccessor correlationIdAccessor)
             :base(options)
         {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+
             _dateTime = dateTime;
             _correlationIdAccessor = correlationIdAccessor;
         }

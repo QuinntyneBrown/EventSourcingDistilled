@@ -6,6 +6,13 @@ namespace EventSourcingDistilled.Core.Models
 {
     public class Customer: AggregateRoot
     {
+        public Guid CustomerId { get; private set; }
+        public string Firstname { get; private set; }
+        public string Lastname { get; private set; }
+        public string Email { get; private set; }
+        public string PhoneNumber { get; private set; }
+        public DateTime? Deleted { get; private set; }
+
         public Customer(string firstname, string lastname) 
             => Apply(new CustomerCreated(Guid.NewGuid(), firstname, lastname));
 
@@ -27,7 +34,7 @@ namespace EventSourcingDistilled.Core.Models
 
         private void When(CustomerRemoved customerRemoved)
         {
-            Deleted = DateTime.UtcNow;
+            Deleted = customerRemoved.Deleted;
         }
 
         protected override void EnsureValidState()
@@ -44,12 +51,5 @@ namespace EventSourcingDistilled.Core.Models
         {
             Apply(new CustomerRemoved());
         }
-
-        public Guid CustomerId { get; private set; }
-        public string Firstname { get; private set; }
-        public string Lastname { get; private set; }
-        public string Email { get; private set; }
-        public string PhoneNumber { get; private set; }
-        public DateTime? Deleted { get; private set; }
     }
 }

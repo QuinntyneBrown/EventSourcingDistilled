@@ -10,7 +10,6 @@ namespace BuildingBlocks.EventStore
     {
         DbSet<StoredEvent> StoredEvents { get; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-
         Task<TAggregateRoot> LoadAsync<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot;
         void Add(IAggregateRoot aggregateRoot);
