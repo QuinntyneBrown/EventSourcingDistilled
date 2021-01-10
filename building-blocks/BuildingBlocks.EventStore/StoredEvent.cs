@@ -16,6 +16,7 @@ namespace BuildingBlocks.EventStore
         public string DotNetType { get; set; }
         public DateTime CreatedOn { get; set; }
         public int Version { get; set; }
+        public Guid CorrelationId { get; set; }
     }
 
 }

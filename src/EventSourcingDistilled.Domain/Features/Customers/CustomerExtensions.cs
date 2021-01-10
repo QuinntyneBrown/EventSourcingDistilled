@@ -1,5 +1,5 @@
 using EventSourcingDistilled.Core.Models;
-using EventSourcingDistilled.Domain.Features.Customers;
+using EventSourcingDistilled.Domain.Features;
 
 namespace EventSourcingDistilled.Domain.Features
 {

@@ -1,36 +1,31 @@
-using BuildingBlocks.Abstractions;
+using BuildingBlocks.EventStore;
 using EventSourcingDistilled.Core.Models;
 using MediatR;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EventSourcingDistilled.Domain.Features.Customers
+namespace EventSourcingDistilled.Domain.Features
 {
     public class RemoveCustomer
     {
-        public class Request : IRequest<Unit> {  
-            public Guid CustomerId { get; set; }        
-        }
+        public record Request(Guid CustomerId) : IRequest<Unit>;
 
         public class Handler : IRequestHandler<Request, Unit>
         {
-            private readonly IAppDbContext _context;
+            private readonly IEventStore _context;
 
-            public Handler(IAppDbContext context) => _context = context;
+            public Handler(IEventStore context) => _context = context;
 
             public async Task<Unit> Handle(Request request, CancellationToken cancellationToken) {
 
-                var customer = _context.Set<Customer>().First(x => x.CustomerId == request.CustomerId);
-
+                var customer = await _context.LoadAsync<Customer>(request.CustomerId);
+                
                 customer.Reomve();
-
-                _context.Store(customer);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
-                return new Unit();
+                return new();
             }
         }
     }

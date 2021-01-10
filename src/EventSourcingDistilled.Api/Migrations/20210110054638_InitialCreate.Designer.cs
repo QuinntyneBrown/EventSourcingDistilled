@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventSourcingDistilled.Api.Migrations
 {
     [DbContext(typeof(EventStoreDbContext))]
-    [Migration("20201123134838_InitialCreate")]
+    [Migration("20210110054638_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,9 @@ namespace EventSourcingDistilled.Api.Migrations
 
                     b.Property<string>("AggregateDotNetType")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CorrelationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");

@@ -6,16 +6,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EventSourcingDistilled.Domain.Features.Customers
+namespace EventSourcingDistilled.Domain.Features
 {
     public class GetCustomers
     {
-        public class Request : IRequest<Response> {  }
+        public record Request : IRequest<Response>;
 
-        public class Response
-        {
-            public List<CustomerDto> Customers { get; set; }
-        }
+        public record Response(List<CustomerDto> Customers);
 
         public class Handler : IRequestHandler<Request, Response>
         {
@@ -24,9 +21,7 @@ namespace EventSourcingDistilled.Domain.Features.Customers
             public Handler(IAppDbContext context) => _context = context;
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {
-			    return new Response() { 
-                    Customers = _context.Set<Customer>().Select(x => x.ToDto()).ToList()
-                };
+                return new (_context.Set<Customer>().Select(x => x.ToDto()).ToList());
             }
         }
     }

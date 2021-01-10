@@ -1,4 +1,4 @@
-using EventSourcingDistilled.Domain.Features.Customers;
+using EventSourcingDistilled.Domain.Features;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,11 +18,18 @@ namespace EventSourcingDistilled.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost(Name = "UpsertCustomerRoute")]
+        [HttpPut(Name = "UpdateCustomerRoute")]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType(typeof(UpsertCustomer.Response), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<UpsertCustomer.Response>> Update([FromBody] UpsertCustomer.Request request)
+        [ProducesResponseType(typeof(UpdateCustomer.Response), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<UpdateCustomer.Response>> Update([FromBody] UpdateCustomer.Request request)
+            => await _mediator.Send(request);
+
+        [HttpPost(Name = "CreateCustomerRoute")]
+        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(CreateCustomer.Response), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<CreateCustomer.Response>> Create([FromBody] CreateCustomer.Request request)
             => await _mediator.Send(request);
 
         [HttpDelete("{customerId}", Name = "RemoveCustomerRoute")]

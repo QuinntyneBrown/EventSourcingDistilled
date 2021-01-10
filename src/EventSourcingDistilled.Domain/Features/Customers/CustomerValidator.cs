@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace EventSourcingDistilled.Domain.Features.Customers
+namespace EventSourcingDistilled.Domain.Features
 {
     public class CustomerValidator : AbstractValidator<CustomerDto>
     {

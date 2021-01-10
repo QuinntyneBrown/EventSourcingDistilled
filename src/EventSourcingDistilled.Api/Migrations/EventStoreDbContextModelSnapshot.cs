@@ -48,6 +48,9 @@ namespace EventSourcingDistilled.Api.Migrations
                     b.Property<string>("AggregateDotNetType")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("CorrelationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 

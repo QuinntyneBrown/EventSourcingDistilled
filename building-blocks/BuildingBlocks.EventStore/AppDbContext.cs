@@ -1,18 +1,17 @@
 ﻿using BuildingBlocks.Abstractions;
-using BuildingBlocks.EventStore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EventSourcingDistilled.Core.Data
+namespace BuildingBlocks.EventStore
 {
-    public class EventSourcingDistilledDbContext : BuildingBlocks.Abstractions.IAppDbContext
+    public class AppDbContext : IAppDbContext
     {
-        private readonly BuildingBlocks.EventStore.IEventStore _eventStore;
+        private readonly IEventStore _eventStore;
         private readonly IAggregateSet _aggregateSet;
-        public EventSourcingDistilledDbContext(BuildingBlocks.EventStore.IEventStore eventStore, IAggregateSet aggregateSet)
+        public AppDbContext(IEventStore eventStore, IAggregateSet aggregateSet)
         {
             _eventStore = eventStore;
             _aggregateSet = aggregateSet;

@@ -1,6 +1,6 @@
 using System;
 
-namespace EventSourcingDistilled.Domain.Features.Customers
+namespace EventSourcingDistilled.Domain.Features
 {
     public class CustomerDto
     {        

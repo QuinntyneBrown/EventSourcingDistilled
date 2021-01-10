@@ -33,7 +33,8 @@ namespace EventSourcingDistilled.Api.Migrations
                     Data = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DotNetType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Version = table.Column<int>(type: "int", nullable: false)
+                    Version = table.Column<int>(type: "int", nullable: false),
+                    CorrelationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {

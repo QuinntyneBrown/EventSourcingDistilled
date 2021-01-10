@@ -8,7 +8,7 @@ namespace BuildingBlocks.EventStore
 {
     public class EventStoreDbContext: DbContext, IEventStoreDbContext
     {
-        public EventStoreDbContext(DbContextOptions options)
+        public EventStoreDbContext(DbContextOptions<EventStoreDbContext> options)
             : base(options) { }
 
         public static readonly ILoggerFactory ConsoleLoggerFactory

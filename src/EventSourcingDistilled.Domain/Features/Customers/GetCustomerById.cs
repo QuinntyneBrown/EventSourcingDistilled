@@ -6,18 +6,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EventSourcingDistilled.Domain.Features.Customers
+namespace EventSourcingDistilled.Domain.Features
 {
     public class GetCustomerById
     {
-        public class Request : IRequest<Response> {  
-            public Guid CustomerId { get; set; }        
-        }
+        public record Request(Guid CustomerId) : IRequest<Response>;
 
-        public class Response
-        {
-            public CustomerDto Customer { get; set; }
-        }
+        public record Response(CustomerDto Customer);
 
         public class Handler : IRequestHandler<Request, Response>
         {
@@ -29,9 +24,7 @@ namespace EventSourcingDistilled.Domain.Features.Customers
 
                 var customer = await _context.FindAsync<Customer>(request.CustomerId);
 
-                return new Response() { 
-                    Customer = customer.ToDto()
-                };
+                return new (customer.ToDto());
             }
         }
     }

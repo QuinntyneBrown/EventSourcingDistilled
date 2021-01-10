@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,9 +8,9 @@ namespace BuildingBlocks.Abstractions
 {
     public interface IAppDbContext
     {
-        IQueryable<T> Set<T>()
+        IQueryable<T> Set<T>(List<Guid> ids = null)
             where T : AggregateRoot;
-        void Store(AggregateRoot aggregateRoot);
+
         Task<TAggregateRoot> FindAsync<TAggregateRoot>(Guid id)
             where TAggregateRoot : AggregateRoot;
 
