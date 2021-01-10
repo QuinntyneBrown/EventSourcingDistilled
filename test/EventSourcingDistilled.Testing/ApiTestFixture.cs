@@ -47,7 +47,7 @@ namespace EventSourcingDistilled.Testing
                 {
                     var scopedServices = scope.ServiceProvider;
 
-                    
+
 
                 }
             });
@@ -62,9 +62,9 @@ namespace EventSourcingDistilled.Testing
                         .UseSqlServer(_configuration[DataDefaultConnectionString])
                         .Options;
 
-                    
+
                     var dateTime = new MachineDateTime();
-                    _context = new EventSourcingDistilledDbContext(options,dateTime,new TestCorrelationIdAccessor(_correlationId));
+                    _context = new EventSourcingDistilledDbContext(options, dateTime, new TestCorrelationIdAccessor(_correlationId));
 
                 }
 

@@ -23,10 +23,11 @@ namespace EventSourcingDistilled.Domain.Features
                 _dateTime = dateTime;
             }
 
-            public async Task<Unit> Handle(Request request, CancellationToken cancellationToken) {
+            public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
+            {
 
                 var customer = await _store.LoadAsync<Customer>(request.CustomerId);
-                
+
                 customer.Reomve(_dateTime.UtcNow);
 
                 await _store.SaveChangesAsync(cancellationToken);

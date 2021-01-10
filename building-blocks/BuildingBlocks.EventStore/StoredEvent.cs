@@ -3,7 +3,7 @@ using System;
 
 namespace BuildingBlocks.EventStore
 {
-    [Index("StreamId","Aggregate")]
+    [Index("StreamId", "Aggregate")]
     public class StoredEvent
     {
         public Guid StoredEventId { get; set; }

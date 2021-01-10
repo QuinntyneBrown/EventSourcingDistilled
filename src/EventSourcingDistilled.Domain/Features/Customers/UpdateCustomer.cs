@@ -18,17 +18,18 @@ namespace EventSourcingDistilled.Domain.Features
             }
         }
 
-        public record Request (CustomerDto Customer): IRequest<Response>;
+        public record Request(CustomerDto Customer): IRequest<Response>;
 
         public record Response(CustomerDto Customer);
 
         public class Handler : IRequestHandler<Request, Response>
         {
             private readonly IEventStore _store;
-            
+
             public Handler(IEventStore store) => _store = store;
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {
+            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            {
 
                 var customer = await _store.LoadAsync<Customer>(request.Customer.CustomerId);
 
@@ -40,7 +41,7 @@ namespace EventSourcingDistilled.Domain.Features
 
                 await _store.SaveChangesAsync(cancellationToken);
 
-                return new (customer.ToDto());
+                return new(customer.ToDto());
             }
         }
     }

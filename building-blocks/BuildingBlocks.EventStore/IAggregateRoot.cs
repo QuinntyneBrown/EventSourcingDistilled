@@ -4,8 +4,8 @@ namespace BuildingBlocks.EventStore
 {
     public interface IAggregateRoot
     {
-        AggregateRoot Apply(object @event);
+        AggregateRoot Apply(IEvent @event);
         void ClearChanges();
-        IReadOnlyCollection<object> DomainEvents { get; }
+        IReadOnlyCollection<IEvent> DomainEvents { get; }
     }
 }

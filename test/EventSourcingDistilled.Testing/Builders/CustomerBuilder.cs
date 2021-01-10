@@ -8,7 +8,7 @@ namespace EventSourcingDistilled.Testing.Builders
 
         public static Customer WithDefaults()
         {
-            return new Customer("Quinn","Brown");
+            return new Customer("Quinn", "Brown");
         }
 
         public CustomerBuilder()

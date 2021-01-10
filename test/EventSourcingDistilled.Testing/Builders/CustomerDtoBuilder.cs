@@ -8,7 +8,7 @@ namespace EventSourcingDistilled.Testing.Builders
 
         public static CustomerDto WithDefaults()
         {
-            return new CustomerDto(default,default,default,default,default);
+            return new CustomerDto(default, default, default, default, default);
         }
 
         public CustomerDtoBuilder()

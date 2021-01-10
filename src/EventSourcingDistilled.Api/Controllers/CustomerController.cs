@@ -46,12 +46,12 @@ namespace EventSourcingDistilled.Api.Controllers
         public async Task<ActionResult<GetCustomers.Response>> Get()
             => await _mediator.Send(new GetCustomers.Request());
 
-        [HttpGet("{customerId}",Name = "GetCustomerByIdRoute")]
+        [HttpGet("{customerId}", Name = "GetCustomerByIdRoute")]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(GetCustomerById.Response), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<GetCustomerById.Response>> Get([FromQuery]GetCustomerById.Request request)
+        public async Task<ActionResult<GetCustomerById.Response>> Get([FromQuery] GetCustomerById.Request request)
         {
             var response = await _mediator.Send(request);
 

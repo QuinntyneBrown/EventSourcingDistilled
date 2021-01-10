@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventSourcingDistilled.Core.Data
 {
-    public interface IEventSourcingDistilledDbContext: IEventStore
+    public interface IEventSourcingDistilledDbContext : IEventStore
     {
         DbSet<Customer> Customers { get; }
     }

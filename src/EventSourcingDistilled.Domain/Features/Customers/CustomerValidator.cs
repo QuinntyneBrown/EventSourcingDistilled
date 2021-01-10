@@ -6,7 +6,7 @@ namespace EventSourcingDistilled.Domain.Features
     {
         public CustomerValidator()
         {
-            
+
         }
     }
 }

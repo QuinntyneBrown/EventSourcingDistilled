@@ -15,9 +15,9 @@ namespace BuildingBlocks.EventStore
         private readonly IDateTime _dateTime;
         private readonly ICorrelationIdAccessor _correlationIdAccessor;
         private readonly List<IAggregateRoot> _trackedAggregates = new List<IAggregateRoot>();
-        
+
         public EventStore(DbContextOptions options, IDateTime dateTime, ICorrelationIdAccessor correlationIdAccessor)
-            :base(options)
+            : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
@@ -31,7 +31,7 @@ namespace BuildingBlocks.EventStore
             where TAggregateRoot : AggregateRoot
         {
             var events = (await StoredEvents.Where(x => x.StreamId == id).OrderBy(x => x.CreatedOn).ToListAsync())
-                    .Select(x => DeserializeObject(x.Data, Type.GetType(x.DotNetType)));
+                    .Select(x => DeserializeObject(x.Data, Type.GetType(x.DotNetType)) as IEvent);
 
             if (!events.Any())
                 return null;
@@ -58,14 +58,14 @@ namespace BuildingBlocks.EventStore
             {
                 var type = aggregateRoot.GetType();
 
-                if(Entry(aggregateRoot) == null)
+                if (Entry(aggregateRoot) == null)
                 {
                     Attach(aggregateRoot);
                     Entry(aggregateRoot).State = EntityState.Modified;
                 }
-                
+
                 StoredEvents.AddRange(aggregateRoot.DomainEvents
-                    .Select(@event => @event.ToStoredEvent(_dateTime, aggregateRoot, _correlationIdAccessor.CorrelationId)));
+                    .Select(@event => @event.ToStoredEvent(aggregateRoot, _correlationIdAccessor.CorrelationId)));
             }
 
             _trackedAggregates.Clear();
@@ -76,7 +76,7 @@ namespace BuildingBlocks.EventStore
 
     public static class EventExtensions
     {
-        public static StoredEvent ToStoredEvent(this object @event, IDateTime dateTime, IAggregateRoot aggregateRoot, Guid correlationId)
+        public static StoredEvent ToStoredEvent(this IEvent @event, IAggregateRoot aggregateRoot, Guid correlationId)
         {
             var type = aggregateRoot.GetType();
 
@@ -89,7 +89,7 @@ namespace BuildingBlocks.EventStore
                 StreamId = (Guid)type.GetProperty($"{type.Name}Id").GetValue(aggregateRoot, null),
                 DotNetType = @event.GetType().AssemblyQualifiedName,
                 Type = @event.GetType().Name,
-                CreatedOn = dateTime.UtcNow,
+                CreatedOn = @event.Created,
                 Sequence = 0,
                 CorrelationId = correlationId
             };

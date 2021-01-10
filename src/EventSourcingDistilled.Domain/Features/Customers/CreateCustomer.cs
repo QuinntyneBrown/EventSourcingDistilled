@@ -32,7 +32,8 @@ namespace EventSourcingDistilled.Domain.Features
                 _context = context;
             }
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {
+            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            {
 
                 var customer = new Customer(request.Customer.Firstname, request.Customer.Lastname);
 
@@ -40,7 +41,7 @@ namespace EventSourcingDistilled.Domain.Features
 
                 await _context.SaveChangesAsync(cancellationToken);
 
-                return new (customer.ToDto());
+                return new(customer.ToDto());
             }
         }
     }

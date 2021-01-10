@@ -4,7 +4,7 @@ using System;
 
 namespace EventSourcingDistilled.Core.Models
 {
-    public class Customer: AggregateRoot
+    public class Customer : AggregateRoot
     {
         public Guid CustomerId { get; private set; }
         public string Firstname { get; private set; }
@@ -13,7 +13,7 @@ namespace EventSourcingDistilled.Core.Models
         public string PhoneNumber { get; private set; }
         public DateTime? Deleted { get; private set; }
 
-        public Customer(string firstname, string lastname) 
+        public Customer(string firstname, string lastname)
             => Apply(new CustomerCreated(Guid.NewGuid(), firstname, lastname));
 
         protected override void When(dynamic @event) => When(@event);

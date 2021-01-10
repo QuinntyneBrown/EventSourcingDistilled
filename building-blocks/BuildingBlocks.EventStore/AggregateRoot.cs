@@ -4,14 +4,14 @@ using static System.Runtime.Serialization.FormatterServices;
 
 namespace BuildingBlocks.EventStore
 {
-    public abstract class AggregateRoot: IAggregateRoot
+    public abstract class AggregateRoot : IAggregateRoot
     {
-        internal List<object> _events = new List<object>();
+        internal List<IEvent> _events = new List<IEvent>();
 
         [NotMapped]
-        public IReadOnlyCollection<object> DomainEvents => _events.AsReadOnly();
+        public IReadOnlyCollection<IEvent> DomainEvents => _events.AsReadOnly();
 
-        public AggregateRoot(IEnumerable<object> events)
+        public AggregateRoot(IEnumerable<IEvent> events)
         {
             foreach (var @event in events) { When(@event); }
         }
@@ -21,13 +21,13 @@ namespace BuildingBlocks.EventStore
 
         }
 
-        public void RaiseDomainEvent(object @event)
+        public void RaiseDomainEvent(IEvent @event)
         {
-            _events ??= new List<object>();
+            _events ??= new List<IEvent>();
             _events.Add(@event);
         }
         public void ClearChanges() => _events?.Clear();
-        public AggregateRoot Apply(object @event)
+        public AggregateRoot Apply(IEvent @event)
         {
             When(@event);
             EnsureValidState();

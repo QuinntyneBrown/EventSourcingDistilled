@@ -21,11 +21,12 @@ namespace EventSourcingDistilled.Domain.Features
 
             public Handler(IEventSourcingDistilledDbContext context) => _context = context;
 
-            public async Task<Response> Handle(Request request, CancellationToken cancellationToken) {
+            public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
+            {
 
                 var customer = await _context.Customers.FindAsync(request.CustomerId);
 
-                return new (customer.ToDto());
+                return new(customer.ToDto());
             }
         }
     }
