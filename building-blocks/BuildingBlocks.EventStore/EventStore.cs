@@ -1,11 +1,10 @@
-using BuildingBlocks.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static BuildingBlocks.Abstractions.AggregateRoot;
+using static BuildingBlocks.EventStore.AggregateRoot;
 using static Newtonsoft.Json.JsonConvert;
 
 namespace BuildingBlocks.EventStore
@@ -52,7 +51,6 @@ namespace BuildingBlocks.EventStore
 
             base.Add(aggregateRoot);
         }
-
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {

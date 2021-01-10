@@ -15,9 +15,4 @@
     <PackageReference Include="System.Reactive" Version="5.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BuildingBlocks.Abstractions\BuildingBlocks.Abstractions.csproj" />
-    <ProjectReference Include="..\BuildingBlocks.Core\BuildingBlocks.Core.csproj" />
-  </ItemGroup>
-
 </Project>

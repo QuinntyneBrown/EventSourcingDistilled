@@ -1,4 +1,4 @@
-using BuildingBlocks.Abstractions;
+using BuildingBlocks.EventStore;
 using BuildingBlocks.EventStore;
 using EventSourcingDistilled.Api;
 using EventSourcingDistilled.Core.Data;

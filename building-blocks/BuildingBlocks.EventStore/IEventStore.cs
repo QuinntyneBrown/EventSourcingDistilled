@@ -1,4 +1,4 @@
-using BuildingBlocks.Abstractions;
+using BuildingBlocks.EventStore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;

@@ -2,14 +2,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using static System.Runtime.Serialization.FormatterServices;
 
-namespace BuildingBlocks.Abstractions
+namespace BuildingBlocks.EventStore
 {
-    public interface IAggregateRoot
-    {
-        AggregateRoot Apply(object @event);
-        void ClearChanges();
-        IReadOnlyCollection<object> DomainEvents { get; }
-    }
     public abstract class AggregateRoot: IAggregateRoot
     {
         internal List<object> _events = new List<object>();
