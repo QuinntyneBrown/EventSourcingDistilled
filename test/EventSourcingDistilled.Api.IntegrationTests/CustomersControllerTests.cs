@@ -56,6 +56,8 @@ namespace EventSourcingDistilled.Api.IntegrationTests
 
             await context.SaveChangesAsync(default);
 
+            context.ChangeTracker.Clear();
+
             var httpResponseMessage = await client.DeleteAsync(Delete.By(customer.CustomerId));
 
             httpResponseMessage.EnsureSuccessStatusCode();
@@ -72,7 +74,13 @@ namespace EventSourcingDistilled.Api.IntegrationTests
 
             var context = _fixture.Context;
 
+            context.Add(customer);
+
             await context.SaveChangesAsync(default);
+            
+            context.ChangeTracker.Clear();
+
+
 
             StringContent stringContent = new StringContent(JsonConvert.SerializeObject(new { customer = customer.ToDto() }), Encoding.UTF8, "application/json");
 
@@ -90,6 +98,8 @@ namespace EventSourcingDistilled.Api.IntegrationTests
             var customer = CustomerBuilder.WithDefaults();
 
             var context = _fixture.Context;
+
+            context.Add(customer);
 
             await context.SaveChangesAsync(default);
 
@@ -109,6 +119,7 @@ namespace EventSourcingDistilled.Api.IntegrationTests
 
             var context = _fixture.Context;
 
+            context.Add(customer);
 
             await context.SaveChangesAsync(default);
 

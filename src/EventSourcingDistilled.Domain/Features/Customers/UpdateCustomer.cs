@@ -1,4 +1,5 @@
 using BuildingBlocks.EventStore;
+using EventSourcingDistilled.Core.Data;
 using EventSourcingDistilled.Core.Models;
 using FluentValidation;
 using MediatR;
@@ -24,14 +25,19 @@ namespace EventSourcingDistilled.Domain.Features
 
         public class Handler : IRequestHandler<Request, Response>
         {
-            private readonly IEventStore _store;
+            private readonly IEventSourcingDistilledDbContext _context;
+            private readonly IDateTime _dateTime;
 
-            public Handler(IEventStore store) => _store = store;
+            public Handler(IDateTime dateTime, IEventSourcingDistilledDbContext context)
+            {
+                _context = context;
+                _dateTime = dateTime;
+            }
 
             public async Task<Response> Handle(Request request, CancellationToken cancellationToken)
             {
 
-                var customer = await _store.LoadAsync<Customer>(request.Customer.CustomerId);
+                var customer = await _context.LoadAsync<Customer>(request.Customer.CustomerId);
 
                 customer.Update(
                     request.Customer.Firstname,
@@ -39,7 +45,7 @@ namespace EventSourcingDistilled.Domain.Features
                     request.Customer.Email,
                     request.Customer.PhoneNumber);
 
-                await _store.SaveChangesAsync(cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
 
                 return new(customer.ToDto());
             }

@@ -23,18 +23,12 @@ namespace EventSourcingDistilled.Core.Data
 
         protected override void OnTrackedAggregatesChanged(IAggregateRoot aggregateRoot, EntityState entityState)
         {
-            try
+            if (Entry(aggregateRoot).State == EntityState.Detached)
             {
-                if (Entry(aggregateRoot).State == EntityState.Detached)
-                {
-                    Attach(aggregateRoot);
+                Attach(aggregateRoot);
 
-                    Entry(aggregateRoot).State = entityState;
+                Entry(aggregateRoot).State = entityState;
 
-                }
-            }catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
             }
         }
     }

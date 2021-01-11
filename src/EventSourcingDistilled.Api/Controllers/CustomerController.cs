@@ -51,7 +51,7 @@ namespace EventSourcingDistilled.Api.Controllers
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(GetCustomerById.Response), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<GetCustomerById.Response>> Get([FromQuery] GetCustomerById.Request request)
+        public async Task<ActionResult<GetCustomerById.Response>> Get([FromRoute] GetCustomerById.Request request)
         {
             var response = await _mediator.Send(request);
 

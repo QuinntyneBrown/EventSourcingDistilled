@@ -16,7 +16,7 @@ namespace BuildingBlocks.EventStore
         private readonly ICorrelationIdAccessor _correlationIdAccessor;
         protected virtual void OnTrackedAggregatesChanged(IAggregateRoot aggregateRoot,EntityState entityState)
         {
-
+            
         }
 
         protected readonly List<IAggregateRoot> _trackedAggregates = new List<IAggregateRoot>();
