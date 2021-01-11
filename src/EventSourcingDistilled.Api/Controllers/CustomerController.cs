@@ -36,7 +36,7 @@ namespace EventSourcingDistilled.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         [ProducesResponseType(typeof(ProblemDetails), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(Unit), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<Unit>> Remove([FromBody] RemoveCustomer.Request request)
+        public async Task<ActionResult<Unit>> Remove([FromRoute] RemoveCustomer.Request request)
             => await _mediator.Send(request);
 
         [HttpGet(Name = "GetCustomersRoute")]

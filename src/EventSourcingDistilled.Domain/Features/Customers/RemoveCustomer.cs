@@ -1,5 +1,6 @@
 using BuildingBlocks.EventStore;
 using BuildingBlocks.EventStore;
+using EventSourcingDistilled.Core.Data;
 using EventSourcingDistilled.Core.Models;
 using MediatR;
 using System;
@@ -14,23 +15,23 @@ namespace EventSourcingDistilled.Domain.Features
 
         public class Handler : IRequestHandler<Request, Unit>
         {
-            private readonly IEventStore _store;
+            private readonly IEventSourcingDistilledDbContext _context;
             private readonly IDateTime _dateTime;
 
-            public Handler(IDateTime dateTime, IEventStore store)
+            public Handler(IDateTime dateTime, IEventSourcingDistilledDbContext context)
             {
-                _store = store;
+                _context = context;
                 _dateTime = dateTime;
             }
 
             public async Task<Unit> Handle(Request request, CancellationToken cancellationToken)
             {
 
-                var customer = await _store.LoadAsync<Customer>(request.CustomerId);
+                var customer = await _context.LoadAsync<Customer>(request.CustomerId);
 
                 customer.Reomve(_dateTime.UtcNow);
 
-                await _store.SaveChangesAsync(cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
 
                 return new();
             }

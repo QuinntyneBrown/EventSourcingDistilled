@@ -14,8 +14,13 @@ namespace BuildingBlocks.EventStore
         private readonly List<StoredEvent> _changes = new List<StoredEvent>();
         private readonly IDateTime _dateTime;
         private readonly ICorrelationIdAccessor _correlationIdAccessor;
-        private readonly List<IAggregateRoot> _trackedAggregates = new List<IAggregateRoot>();
+        protected virtual void OnTrackedAggregatesChanged(IAggregateRoot aggregateRoot,EntityState entityState)
+        {
 
+        }
+
+        protected readonly List<IAggregateRoot> _trackedAggregates = new List<IAggregateRoot>();
+        protected List<IAggregateRoot> TrackedAggregates { get; }
         public EventStore(DbContextOptions options, IDateTime dateTime, ICorrelationIdAccessor correlationIdAccessor)
             : base(options)
         {
@@ -42,6 +47,8 @@ namespace BuildingBlocks.EventStore
 
             _trackedAggregates.Add(aggregate);
 
+            OnTrackedAggregatesChanged(aggregate, EntityState.Modified);
+
             return aggregate;
         }
 
@@ -49,7 +56,8 @@ namespace BuildingBlocks.EventStore
         {
             _trackedAggregates.Add(aggregateRoot);
 
-            base.Add(aggregateRoot);
+            OnTrackedAggregatesChanged(aggregateRoot, EntityState.Added);
+
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)
@@ -57,12 +65,6 @@ namespace BuildingBlocks.EventStore
             foreach (var aggregateRoot in _trackedAggregates)
             {
                 var type = aggregateRoot.GetType();
-
-                if (Entry(aggregateRoot) == null)
-                {
-                    Attach(aggregateRoot);
-                    Entry(aggregateRoot).State = EntityState.Modified;
-                }
 
                 StoredEvents.AddRange(aggregateRoot.DomainEvents
                     .Select(@event => {

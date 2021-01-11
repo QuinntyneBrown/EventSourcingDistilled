@@ -50,6 +50,8 @@ namespace EventSourcingDistilled.Api.IntegrationTests
 
             var context = _fixture.Context;
 
+            context.Add(customer);
+
             var client = _fixture.CreateClient();
 
             await context.SaveChangesAsync(default);
