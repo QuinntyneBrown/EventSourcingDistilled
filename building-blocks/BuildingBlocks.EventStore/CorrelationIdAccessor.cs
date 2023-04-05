@@ -1,17 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+// Copyright (c) Quinntyne Brown. All Rights Reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.AspNetCore.Http;
 using System;
 
-namespace BuildingBlocks.EventStore
+
+namespace EventSourcing;
+
+public class CorrelationIdAccessor : ICorrelationIdAccessor
 {
-    public class CorrelationIdAccessor : ICorrelationIdAccessor
-    {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CorrelationIdAccessor(IHttpContextAccessor httpContextAccessor)
-            => _httpContextAccessor = httpContextAccessor;
+    public CorrelationIdAccessor(IHttpContextAccessor httpContextAccessor)
+        => _httpContextAccessor = httpContextAccessor;
 
-        public Guid CorrelationId => _httpContextAccessor != null && _httpContextAccessor.HttpContext != null
-                ? new Guid(_httpContextAccessor.HttpContext.Request.Headers["correlationId"])
-                : Guid.NewGuid();
-    }
+    public Guid CorrelationId => _httpContextAccessor != null && _httpContextAccessor.HttpContext != null
+            ? new Guid(_httpContextAccessor.HttpContext.Request.Headers["correlationId"])
+            : Guid.NewGuid();
 }
+

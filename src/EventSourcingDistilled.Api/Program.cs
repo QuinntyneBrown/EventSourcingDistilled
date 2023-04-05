@@ -1,4 +1,4 @@
-using BuildingBlocks.EventStore;
+using EventSourcing;
 using EventSourcingDistilled.Core.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

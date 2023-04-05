@@ -1,7 +1,7 @@
-using BuildingBlocks.EventStore;
-using BuildingBlocks.EventStore;
+using EventSourcing;
+using EventSourcing;
 using EventSourcingDistilled.Core.Data;
-using EventSourcingDistilled.Core.Models;
+using EventSourcingDistilled.Core.CustomerAggregateModel;
 using MediatR;
 using System;
 using System.Threading;

@@ -1,5 +1,5 @@
-using BuildingBlocks.EventStore;
-using BuildingBlocks.EventStore;
+using EventSourcing;
+using EventSourcing;
 using EventSourcingDistilled.Api;
 using EventSourcingDistilled.Core.Data;
 using EventSourcingDistilled.Testing.Factories;

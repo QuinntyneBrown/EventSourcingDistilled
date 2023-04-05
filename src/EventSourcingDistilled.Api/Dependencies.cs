@@ -1,4 +1,4 @@
-using BuildingBlocks.EventStore;
+using EventSourcing;
 using EventSourcingDistilled.Core.Data;
 using EventSourcingDistilled.Domain.Features;
 using MediatR;

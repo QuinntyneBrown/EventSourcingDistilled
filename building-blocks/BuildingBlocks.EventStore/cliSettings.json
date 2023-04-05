@@ -1,1 +1,0 @@
-{"RootNamespace":"EventSourcingDistilled","Namespace":"BuildingBlocks.EventStore","Domain":"BuildingBlocks.Domain","Api":"EventSourcingDistilled.Api","Core":"EventSourcingDistilled.Core","EntityIdDataType":"Guid"}

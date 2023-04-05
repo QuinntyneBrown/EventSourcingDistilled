@@ -1,4 +1,4 @@
-using EventSourcingDistilled.Core.Models;
+using EventSourcingDistilled.Core.CustomerAggregateModel;
 using EventSourcingDistilled.Domain.Features;
 
 namespace EventSourcingDistilled.Domain.Features

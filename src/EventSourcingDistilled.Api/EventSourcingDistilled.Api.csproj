@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\building-blocks\BuildingBlocks.EventStore\BuildingBlocks.EventStore.csproj" />
+    <ProjectReference Include="..\..\building-blocks\EventSourcing\EventSourcing.csproj" />
     <ProjectReference Include="..\EventSourcingDistilled.Core\EventSourcingDistilled.Core.csproj" />
     <ProjectReference Include="..\EventSourcingDistilled.Domain\EventSourcingDistilled.Domain.csproj" />
   </ItemGroup>

@@ -21,7 +21,7 @@ namespace EventSourcingDistilled.Api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("BuildingBlocks.EventStore.StoredEvent", b =>
+            modelBuilder.Entity("EventSourcing.StoredEvent", b =>
                 {
                     b.Property<Guid>("StoredEventId")
                         .ValueGeneratedOnAdd()
@@ -61,7 +61,7 @@ namespace EventSourcingDistilled.Api.Migrations
                     b.ToTable("StoredEvents");
                 });
 
-            modelBuilder.Entity("EventSourcingDistilled.Core.Models.Customer", b =>
+            modelBuilder.Entity("EventSourcingDistilled.Core.CustomerAggregateModel.Customer", b =>
                 {
                     b.Property<Guid>("CustomerId")
                         .ValueGeneratedOnAdd()

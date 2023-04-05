@@ -1,4 +1,4 @@
-using EventSourcingDistilled.Core.Models;
+using EventSourcingDistilled.Core.CustomerAggregateModel;
 using Xunit;
 
 namespace EventSourcingDistilled.Core.UnitTests.Models

@@ -1,6 +1,6 @@
-using BuildingBlocks.EventStore;
+using EventSourcing;
 using EventSourcingDistilled.Core.Data;
-using EventSourcingDistilled.Core.Models;
+using EventSourcingDistilled.Core.CustomerAggregateModel;
 using FluentValidation;
 using MediatR;
 using System.Threading;

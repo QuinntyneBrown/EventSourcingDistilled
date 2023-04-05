@@ -1,4 +1,4 @@
-using EventSourcingDistilled.Core.Models;
+using EventSourcingDistilled.Core.CustomerAggregateModel;
 
 namespace EventSourcingDistilled.Testing.Builders
 {

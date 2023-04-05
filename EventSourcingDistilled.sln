@@ -1,13 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30711.63
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33402.96
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B175736E-E55B-4A62-A58F-2142DA900B8B}"
-	ProjectSection(SolutionItems) = preProject
-		cliSettings.json = cliSettings.json
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EB5B648B-AB63-497C-9507-AD1F1D68EC87}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingDistilled.Core", "src\EventSourcingDistilled.Core\EventSourcingDistilled.Core.csproj", "{43212F29-12A2-4B57-8586-F9DDF0B5F5A1}"
@@ -18,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingDistilled.Core
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "building-blocks", "building-blocks", "{6D304992-458E-44B1-8400-BB459909041E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildingBlocks.EventStore", "building-blocks\BuildingBlocks.EventStore\BuildingBlocks.EventStore.csproj", "{B350B174-0A12-470F-A63B-03EAC82A968F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcing", "building-blocks\BuildingBlocks.EventStore\EventSourcing.csproj", "{B350B174-0A12-470F-A63B-03EAC82A968F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSourcingDistilled.Domain", "src\EventSourcingDistilled.Domain\EventSourcingDistilled.Domain.csproj", "{94AB04CD-4D55-4F0F-A0EB-064B0FC4A9F5}"
 EndProject

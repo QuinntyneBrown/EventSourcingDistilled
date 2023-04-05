@@ -4,10 +4,7 @@
 using System;
 
 
-namespace EventSourcing;
+namespace EventSourcingDistilled.Domain.Features;
 
-public class MachineDateTime : IDateTime
-{
-    public DateTime UtcNow => DateTime.UtcNow;
-}
+public record CustomerDto(Guid CustomerId, string FirstName, string LastName, string Email, string PhoneNumber);
 
